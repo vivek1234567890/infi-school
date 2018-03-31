@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>School:</strong>
+  <%= @standard.school_id %>
+</p>
+
+<p>
+  <strong>Class name:</strong>
+  <%= @standard.class_name %>
+</p>
+
+<p>
+  <strong>Min attendance mark:</strong>
+  <%= @standard.min_attendance_mark %>
+</p>
+
+<%= link_to 'Edit', edit_standard_path(@standard) %> |
+<%= link_to 'Back', standards_path %>

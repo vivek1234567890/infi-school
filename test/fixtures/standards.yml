@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  school_id: 1
+  class_name: MyString
+  min_attendance_mark: 1.5
+
+two:
+  school_id: 1
+  class_name: MyString
+  min_attendance_mark: 1.5

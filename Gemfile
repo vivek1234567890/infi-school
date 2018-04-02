@@ -50,7 +50,9 @@ gem 'pry'
 # gem 'bootstrap-sass', '~> 3.2.0'
 # gem 'autoprefixer-rails'
 # gem 'therubyracer'
-# gem 'execjs'
+gem 'execjs'
+gem 'bootstrap-datepicker-rails', '>= 0.6.21'
+gem 'twitter-bootstrap-rails'
 
 
 

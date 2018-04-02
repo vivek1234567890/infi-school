@@ -2,7 +2,7 @@
 
 <h1>Listing Students</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
@@ -15,10 +15,9 @@
     <% @students.each do |student| %>
       <tr>
         <td><%= student.name %></td>
-        <td><%= student.standard_id %></td>
-        <td><%= link_to 'Show', url_for([@school,student]) %></td>
-        <td><%= link_to 'Edit', edit_school_student_path(@school,student) %></td>
-        <td><%= link_to 'Destroy', ([@school,student]), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= student.standard.class_name %></td>
+        <td><%= link_to 'Edit', edit_school_student_path(@school,student), :class =>"btn btn-success" %></td>
+        <td><%= link_to 'Destroy', ([@school,student]), method: :delete, data: { confirm: 'Are you sure?' }, :class =>"btn btn-success" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,18 +25,14 @@
 
 <br>
 
-<%= link_to 'New Student', new_school_student_path(@school) %>
+<%= link_to 'New Student', new_school_student_path(@school), :class =>"btn btn-success" %>
 
-
-
-<p id="notice"><%= notice %></p>
 
 <h1>Listing Standards</h1>
 
-<table>
+<table class="table">>
   <thead>
     <tr>
-      <th>School</th>
       <th>Class name</th>
       <th>Min attendance mark</th>
       <th colspan="3"></th>
@@ -47,12 +42,10 @@
   <tbody>
     <% @standards.each do |standard| %>
       <tr>
-        <td><%= standard.school_id %></td>
         <td><%= standard.class_name %></td>
         <td><%= standard.min_attendance_mark %></td>
-        <td><%= link_to 'Show', url_for([@school,standard]) %></td>
-        <td><%= link_to 'Edit', edit_school_standard_path(@school,standard) %></td>
-        <td><%= link_to 'Destroy', ([@school,standard]), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_school_standard_path(@school,standard), :class =>"btn btn-success" %></td>
+        <td><%= link_to 'Destroy', ([@school,standard]), method: :delete, data: { confirm: 'Are you sure?' }, :class =>"btn btn-success" %></td>
       </tr>
     <% end %>
   </tbody>
@@ -60,6 +53,170 @@
 
 <br>
 
-<%= link_to 'New Standard', new_school_standard_path(@school) %>
+<%= link_to 'New Standard', new_school_standard_path(@school), :class =>"btn btn-success" %>
 
 
+
+<h1>Mark Attendance</h1>
+
+<%= form_tag mark_attendance_school_students_path(@school), :class=>"form-inline" ,:role=>"form", method: 'POST', :id=>"mark_attendance_form" do %>
+  <div class="row">
+    <div class="col-md-3">
+      <label for="exampleInputEmail2">Standard</label>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group" style="width: 100%;">
+        <%= select_tag "standard_id", options_from_collection_for_select(@school.standards, "id", "class_name"),:prompt => "Select a Class", :class=>"form-control", :required => true, :style => "width:100%" %>
+      </div>
+      </br>
+    </div>
+  </div>  
+  <br/>
+  <div class="row">
+    <div class="col-md-3">
+      <label for="exampleInputEmail2">Student</label>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group" style="width: 100%;">
+        <%= select_tag "student_id", options_from_collection_for_select(@school.students, "id", "name"), :class=>"form-control", :required => true, :style => "width:100%"  %>    
+      </div>
+      </br>
+    </div>
+  </div>  
+  <br/>
+  <div class="row">
+    <div class="col-md-3">
+      <label for="exampleInputEmail2">Date</label>
+    </div>
+    <div class="col-md-4">
+      <%= text_field_tag "date", "" , :class=>"form-control", :placeholder=> "Date", 'data-behaviour' => 'datepicker' %>   
+    </div>
+    </br>    
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-3">
+      <label for="exampleInputName2" style="">Status</label>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group" style="width: 100%;">
+        <%= select_tag "status", "<option>Present</option><option>Absent</option><option>Weekoff</option><option>Holiday</option>".html_safe, :class=>"form-control"  %>
+      </div>
+      </br>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col-md-12" style="">
+      </br>
+      <button type="submit" class="btn btn-info btn-trans btn-sm" style="" id = "validate_fields" ><i class='fa fa-filter'></i>Mark</button>
+    </div>
+  </div>
+<% end %>
+<br/><br/>
+
+
+<h1>Generate Report</h1>
+
+<%= form_tag generate_report_school_students_path(@school), :remote => true, :class=>"form-inline" ,:role=>"form", method: 'POST', :id=>"attendance_report_form" do %>
+  <div class="row">
+    <div class="col-md-3">
+      <label for="exampleInputEmail2">Standard</label>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group" style="width: 100%;">
+        <%= select_tag "standard_id", options_from_collection_for_select(@school.standards, "id", "class_name"),:prompt => "Select a Class", :class=>"form-control", :required => true, :style => "width:100%" %>
+      </div>
+      </br>
+    </div>
+  </div>  
+  <br/>
+  <div class="row">
+    <div class="col-md-3">
+      <label for="exampleInputEmail2">Student</label>
+    </div>
+    <div class="col-md-4">
+      <div class="input-group" style="width: 100%;">
+        <%= select_tag "student_id", options_from_collection_for_select(@school.students, "id", "name"), :class=>"form-control", :required => true, :style => "width:100%"  %>    
+      </div>
+      </br>
+    </div>
+  </div>  
+  <br/>
+  <div class="row">
+    <div class="col-md-3">
+      <label for="exampleInputEmail2">Month</label>
+    </div>
+    <div class="col-md-4">
+      <div>
+        <%= select_month(Date.today, {}, {:class => 'form-control',:name => "from_month"}) %>
+        <%= select_year(Date.today,  {:start_year => Date.today.year, :end_year => Date.today.year-3}, {:class => 'form-control',:name => "from_year"}) %>
+        </br>
+      </div>
+    </div>      
+  </div>
+
+  <div class="row">
+    <div class="col-md-12" style="">
+      </br>
+      <button type="submit" class="btn btn-info btn-trans btn-sm" style="" id = "validate_field" ><i class='fa fa-filter'></i>Mark</button>
+    </div>
+  </div>
+
+  <div id="add_report"></div>
+<% end %>
+<br/><br/>
+
+
+
+
+
+<script type="text/javascript">
+
+  $('[data-behaviour~=datepicker]').datepicker();
+
+
+  $(document).ready(function(){
+     $('[data-behaviour~=datepicker]').datepicker();
+  });
+ $.fn.datepicker.defaults.format = "dd-M-yyyy";
+
+  $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
+      $(this).datepicker({"autoclose": true});
+  });
+
+  $("#attendance_report_form #standard_id").change(function(){
+    var type_val = $("#attendance_report_form #standard_id").val();
+    $.ajax({
+      type: "GET",
+      url: '/students/process_report_params',
+      dataType: "JSON",
+      data: {type: type_val},
+      success:function(data) {      
+        $('#attendance_report_form #student_id').empty();   
+        console.log(data.type_data);   
+        jQuery.each(data.type_data,function(i, v) {
+             $('#attendance_report_form #student_id').append( $('<option value="'+data.type_data[i]["id"] +'">'+data.type_data[i]["name"] +'</option>'));
+           });
+      }
+    });
+  });
+
+  $("#mark_attendance_form #standard_id").change(function(){
+    var type_val = $("#mark_attendance_form #standard_id").val();
+    $.ajax({
+      type: "GET",
+      url: '/students/process_report_params',
+      dataType: "JSON",
+      data: {type: type_val},
+      success:function(data) {      
+        $('#mark_attendance_form #student_id').empty();   
+        console.log(data.type_data);   
+        jQuery.each(data.type_data,function(i, v) {
+             $('#mark_attendance_form #student_id').append( $('<option value="'+data.type_data[i]["id"] +'">'+data.type_data[i]["name"] +'</option>'));
+           });
+      }
+    });
+  });
+
+ </script>

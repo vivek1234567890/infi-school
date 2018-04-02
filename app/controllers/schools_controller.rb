@@ -1,5 +1,5 @@
 class SchoolsController < ApplicationController
-  before_action :set_school, only: [:show, :edit, :update, :destroy]
+  before_action :set_school, only: [:show, :edit, :update, :destroy,:manage_school]
   # GET /schools
   # GET /schools.json
   def index
@@ -61,8 +61,6 @@ class SchoolsController < ApplicationController
   end
 
   def manage_school
-    # binding.pry
-    @school = School.find(params[:id])
     @students = @school.students
     @standards = @school.standards
   end

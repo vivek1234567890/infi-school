@@ -1,5 +1,6 @@
 class StandardsController < ApplicationController
   before_action :set_standard, only: [:show, :edit, :update, :destroy]
+  before_action :set_school, only: [:new, :edit, :show,:create,:update,:destroy]
 
   # GET /standards
   # GET /standards.json
@@ -14,7 +15,7 @@ class StandardsController < ApplicationController
 
   # GET /standards/new
   def new
-    @standard = Standard.new
+    @standard = @school.standards.build
   end
 
   # GET /standards/1/edit
@@ -24,11 +25,11 @@ class StandardsController < ApplicationController
   # POST /standards
   # POST /standards.json
   def create
-    @standard = Standard.new(standard_params)
+    @standard = @school.standards.new(standard_params)
 
     respond_to do |format|
       if @standard.save
-        format.html { redirect_to @standard, notice: 'Standard was successfully created.' }
+        format.html { redirect_to manage_school_school_path(@school), notice: 'Standard was successfully created.' }
         format.json { render :show, status: :created, location: @standard }
       else
         format.html { render :new }
@@ -42,7 +43,7 @@ class StandardsController < ApplicationController
   def update
     respond_to do |format|
       if @standard.update(standard_params)
-        format.html { redirect_to @standard, notice: 'Standard was successfully updated.' }
+        format.html { redirect_to manage_school_school_path(@school), notice: 'Standard was successfully updated.' }
         format.json { render :show, status: :ok, location: @standard }
       else
         format.html { render :edit }
@@ -56,7 +57,7 @@ class StandardsController < ApplicationController
   def destroy
     @standard.destroy
     respond_to do |format|
-      format.html { redirect_to standards_url, notice: 'Standard was successfully destroyed.' }
+      format.html { redirect_to manage_school_school_path(@school), notice: 'Standard was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -67,8 +68,12 @@ class StandardsController < ApplicationController
       @standard = Standard.find(params[:id])
     end
 
+    def set_school
+      @school = School.find(params[:school_id])
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def standard_params
-      params.require(:standard).permit(:school_id, :class_name, :min_attendance_mark)
+      params.require(:standard).permit(:school_id, :class_name, :min_attendance_mark,:school_id)
     end
 end

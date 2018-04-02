@@ -1,9 +1,16 @@
 Rails.application.routes.draw do
   root 'schools#index'    
+  get "students/process_report_params"
+  
   resources :schools do 
     resources :standards
-    resources :students
-    member   do
+    resources :students do 
+      collection do 
+        post "mark_attendance"
+        post "generate_report"
+      end
+    end
+    member do
       get 'manage_school'      
     end  
   end

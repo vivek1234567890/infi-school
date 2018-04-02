@@ -89,7 +89,7 @@
       <label for="exampleInputEmail2">Date</label>
     </div>
     <div class="col-md-4">
-      <%= text_field_tag "date", "" , :class=>"form-control", :placeholder=> "Date", 'data-behaviour' => 'datepicker' %>   
+      <%= date_field_tag "date", "" , :class=>"form-control modelname_due_date", :placeholder=> "Date", 'data-behaviour' => 'datepicker' %>   
     </div>
     </br>    
   </div>
@@ -168,22 +168,7 @@
 <br/><br/>
 
 
-
-
-
 <script type="text/javascript">
-
-  $('[data-behaviour~=datepicker]').datepicker();
-
-
-  $(document).ready(function(){
-     $('[data-behaviour~=datepicker]').datepicker();
-  });
- $.fn.datepicker.defaults.format = "dd-M-yyyy";
-
-  $(document).on("focus", "[data-behaviour~='datepicker']", function(e){
-      $(this).datepicker({"autoclose": true});
-  });
 
   $("#attendance_report_form #standard_id").change(function(){
     var type_val = $("#attendance_report_form #standard_id").val();

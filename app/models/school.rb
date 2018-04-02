@@ -38,7 +38,7 @@ class School < ActiveRecord::Base
   	  	  last_month_att_record = student.attendance_records.where(date: last_month_date).last
   	  	  next if last_month_att_record.empty?
           attendance_hash = last_month_att_record.attendance_hash 
-          highest_wf_words = []
+          @highest_wf_words = []
           absent_count = attendance_hash.select {|k, v| v == "A"}.keys.each {|k| @highest_wf_words << [k]}.count
           present_count = attendance_hash.select {|k, v| v == "P"}.keys.each {|k| @highest_wf_words << [k]}.count
           weekoff_count = attendance_hash.select {|k, v| v == "W"}.keys.each {|k| @highest_wf_words << [k]}.count

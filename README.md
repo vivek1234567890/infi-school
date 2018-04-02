@@ -17,7 +17,9 @@ This application is basically school management system.
 
 6) Mark Attendance - Mark attendance for students on daily basis.
 
-7) Generate Report- For tracking students as defauletr or not with whole month statuses.
+7) Generate Report- For tracking students as defaulter or not with whole days statuses for a month.
+
+
 
 
 

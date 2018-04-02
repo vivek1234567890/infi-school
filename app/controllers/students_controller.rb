@@ -53,13 +53,13 @@ class StudentsController < ApplicationController
 
   def mark_attendance
     date = params[:date]
-    attendance_hash = { "Present"=>"P", "Absent"=>"A", "Weekoff"=>"W", "Holiday"=>"H" }
+    attendance_status = { "Present"=>"P", "Absent"=>"A", "Weekoff"=>"W", "Holiday"=>"H" }
     @student = @school.students.find(params[:student_id])
     @standard = @school.standards.find(params[:standard_id])
     @attendance_record = @student.attendance_records.where(month_start_date: params[:date].to_date.at_beginning_of_month).last
 
     if @attendance_record
-      @attendance_record.attendance_hash["#{date.to_date}"] = attendance_hash["#{params[:status]}"]
+      @attendance_record.attendance_hash["#{date.to_date}"] = attendance_status["#{params[:status]}"]
       @attendance_record.save
     else
       first_date = date.to_date.at_beginning_of_month
@@ -70,7 +70,7 @@ class StudentsController < ApplicationController
       @attendance_record = @student.attendance_records.new(month_start_date: date.to_date.at_beginning_of_month, standard_id: @student.standard_id, attendance_hash: attendance_hash)
       @attendance_record.save(:validate=>false)
       if @attendance_record
-        @attendance_record.attendance_hash["#{date.to_date}"] = attendance_hash["#{params[:status]}"]
+        @attendance_record.attendance_hash["#{date.to_date}"] = attendance_status["#{params[:status]}"]
         @attendance_record.save
       end
     end

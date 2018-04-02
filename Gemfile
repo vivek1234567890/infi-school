@@ -44,15 +44,14 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
+gem 'execjs'
 
 gem 'whenever', require: false
 gem 'pry'
 # gem 'bootstrap-sass', '~> 3.2.0'
 # gem 'autoprefixer-rails'
 # gem 'therubyracer'
-gem 'execjs'
-gem 'bootstrap-datepicker-rails', '>= 0.6.21'
-gem 'twitter-bootstrap-rails'
+
 
 
 
